@@ -2,8 +2,8 @@
     import TodoItem from './TodoItem.svelte';
 
     let newTodoTitle = '';
-    let currentFilter = 'all';
-    let nextId = 4;
+   
+    $: todos;
     let todos = [
         {
             id: 1,
@@ -21,14 +21,16 @@
             completed: false
         }
     ];
-    $: todos;
+    let nextId = Math.max(...todos.map(t => t.id)) + 1;
     function addTodo(event) {
         if (event.key === 'Enter') {
-            todos = [...todos, {
-                id: nextId,
-                completed: false,
-                title: newTodoTitle
-            }];
+            todos = [...todos, 
+                {
+                    id: nextId,
+                    completed: false,
+                    title: newTodoTitle
+                }
+            ];
             nextId = nextId + 1;
             newTodoTitle = '';
         }
@@ -59,15 +61,37 @@
         padding: 10px, 20px;
         font-size: 18px;
         margin-bottom: 20px;
+        background-color: #f7f9fc;
+        color: #1a2138;
+        font-family: Open Sans,sans-serif;
+        -webkit-appearance: none;
+        transition-duration: .15s;
+        transition-property: border,background-color,color,box-shadow;
+        transition-timing-function: ease-in;
+        border: 1px solid #edf1f7;
+    }
+    .todo-card {
+        padding: 15px;
+        box-shadow: 0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12);
+        border-radius: .25rem;
+        color: white;
+        background: white;
     }
 </style>
 
 <div class="container">
-    <h2>Svelte Todo</h2>
-    <input type="text" class="todo-input" placeholder="Insert todo item ..." bind:value={newTodoTitle} on:keydown={addTodo} >
-    {#each todos as todo}
-        <div class="todo-item">
-            <TodoItem {...todo} on:deleteTodo={handleDeleteTodo} on:toggleComplete={handleToggleComplete} />
-        </div>
-    {/each}
+    <div class="todo-card">
+        <input 
+            type="text" 
+            class="todo-input" 
+            placeholder="input task..." 
+            bind:value={newTodoTitle} 
+            on:keydown={addTodo} 
+        >
+        {#each todos as todo}
+            <TodoItem {...todo} 
+                on:deleteTodo={handleDeleteTodo} 
+                on:toggleComplete={handleToggleComplete} />
+        {/each}
+    </div>
 </div>

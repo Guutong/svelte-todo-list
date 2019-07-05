@@ -25,9 +25,9 @@
         justify-content: space-between;
         animation-duration: 0.3s;
         //border: 1px solid white;
-        padding: 5px;
+        padding: 0 15px;
         box-shadow: 0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12);
-        border-radius: .125rem;
+        border-radius: .25rem;
         color: white;
         background: linear-gradient(40deg,#ffd86f,#fc6262)!important;
     }
